@@ -15,28 +15,41 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        $this->call([
+            RolePermissionSeeder::class,
+        ]);
+
         // Admin User
-        User::factory()->create([
+        $adminOptions = [
             'name' => 'Admin User',
             'email' => 'admin@example.com',
             'role' => 'admin',
             'password' => bcrypt('password'),
-        ]);
+        ];
+        $admin = User::where('email', 'admin@example.com')->first();
+        if(!$admin) $admin = User::factory()->create($adminOptions);
+        $admin->assignRole('admin');
 
         // Client User
-        User::factory()->create([
+        $clientOptions = [
             'name' => 'Client User',
             'email' => 'client@example.com',
             'role' => 'client',
             'password' => bcrypt('password'),
-        ]);
+        ];
+        $client = User::where('email', 'client@example.com')->first();
+        if(!$client) $client = User::factory()->create($clientOptions);
+        $client->assignRole('client');
 
         // IP Expert User
-        User::factory()->create([
+        $expertOptions = [
             'name' => 'IP Expert',
             'email' => 'expert@example.com',
             'role' => 'expert',
             'password' => bcrypt('password'),
-        ]);
+        ];
+        $expert = User::where('email', 'expert@example.com')->first();
+        if(!$expert) $expert = User::factory()->create($expertOptions);
+        $expert->assignRole('expert');
     }
 }

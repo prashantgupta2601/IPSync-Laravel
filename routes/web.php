@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PatentController;
 use App\Http\Controllers\TrademarkController;
 use App\Http\Controllers\AppointmentController;
+use App\Http\Controllers\RoleController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -22,6 +23,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('patents', PatentController::class);
     Route::resource('trademarks', TrademarkController::class);
     Route::resource('appointments', AppointmentController::class);
+    Route::resource('roles', RoleController::class); // Added Roles
 });
 
 require __DIR__.'/auth.php';
