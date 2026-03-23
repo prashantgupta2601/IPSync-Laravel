@@ -40,7 +40,7 @@
                 </div>
             </div>
 
-            <div class="flex-1">
+            <div class="flex-1 min-w-0">
                 <h4 class="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">Assigned Permissions</h4>
                 <div class="flex flex-wrap gap-2">
                     @if($role->name === 'super-admin')
@@ -49,7 +49,7 @@
                         </span>
                     @else
                         @forelse($role->permissions->take(6) as $permission)
-                        <span class="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-white/5 text-gray-300 border border-white/10">
+                        <span class="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-white/5 text-gray-300 border border-white/10 whitespace-nowrap">
                             {{ $permission->name }}
                         </span>
                         @empty
@@ -57,7 +57,7 @@
                         @endforelse
                         
                         @if($role->permissions->count() > 6)
-                        <span class="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-white/5 text-gray-400 border border-white/10">
+                        <span class="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-white/5 text-gray-400 border border-white/10 whitespace-nowrap">
                             +{{ $role->permissions->count() - 6 }} more
                         </span>
                         @endif
@@ -66,7 +66,7 @@
             </div>
 
             <div class="mt-6 pt-4 border-t border-white/5">
-                <a href="#" class="text-sm text-[#C4B5FD] hover:text-[#A78BFA] font-medium flex items-center group-hover:underline">
+                <a href="{{ route('roles.edit', $role) }}" class="text-sm text-[#C4B5FD] hover:text-[#A78BFA] font-medium flex items-center group-hover:underline">
                     Manage Access
                     <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
                 </a>
