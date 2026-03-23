@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="scroll-smooth">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="scroll-smooth dark">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -26,15 +26,15 @@
             }
         </style>
     </head>
-    <body class="font-sans antialiased text-gray-900 bg-[#FAFAFA] dark:bg-[#09090b] dark:text-gray-100 selection:bg-indigo-500 selection:text-white">
+    <body class="font-sans antialiased text-gray-900 bg-[#FAFAFA] dark:bg-[#000000] dark:text-gray-100 selection:bg-[#C4B5FD]/100 selection:text-white">
         
         <!-- Navigation -->
-        <nav class="fixed w-full z-50 glassmorphism dark:bg-[#09090b]/80 border-b border-gray-200/50 dark:border-gray-800/50 transition-all">
+        <nav class="fixed w-full z-50 glassmorphism dark:bg-[#000000]/80 border-b border-gray-200/50 dark:border-gray-800/50 transition-all">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex justify-between items-center h-20">
                     <div class="flex-shrink-0 flex items-center gap-2">
-                        <svg class="w-8 h-8 text-indigo-600 dark:text-indigo-500" fill="currentColor" viewBox="0 0 24 24"><path d="M12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22ZM12 4C7.58172 4 4 7.58172 4 12C4 16.4183 7.58172 20 12 20C16.4183 20 20 16.4183 20 12C20 7.58172 16.4183 4 12 4ZM11 11H7V13H11V17H13V13H17V11H13V7H11V11Z"></path></svg>
-                        <span class="font-bold text-2xl tracking-tight">IP<span class="text-indigo-600 dark:text-indigo-500">Sync</span></span>
+                        <svg class="w-8 h-8 text-[#C4B5FD] dark:text-[#C4B5FD]" fill="currentColor" viewBox="0 0 24 24"><path d="M12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22ZM12 4C7.58172 4 4 7.58172 4 12C4 16.4183 7.58172 20 12 20C16.4183 20 20 16.4183 20 12C20 7.58172 16.4183 4 12 4ZM11 11H7V13H11V17H13V13H17V11H13V7H11V11Z"></path></svg>
+                        <span class="font-bold text-2xl tracking-tight">IP<span class="text-[#C4B5FD] dark:text-[#C4B5FD]">Sync</span></span>
                     </div>
                     <div class="hidden md:flex space-x-8 items-center">
                         <a href="#features" class="text-sm font-medium text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white transition-colors">Features</a>
@@ -48,7 +48,7 @@
                             @else
                                 <a href="{{ route('login') }}" class="text-sm font-medium text-gray-600 hover:text-gray-900 dark:text-gray-300 transition-colors">Log in</a>
                                 @if (Route::has('register'))
-                                    <a href="{{ route('register') }}" class="inline-flex items-center justify-center px-5 py-2.5 text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 rounded-full transition-all hover:shadow-lg hover:shadow-indigo-500/30 transform hover:-translate-y-0.5">Start for free</a>
+                                    <a href="{{ route('register') }}" class="inline-flex items-center justify-center px-5 py-2.5 text-sm font-medium bg-[#C4B5FD] text-black font-semibold hover:bg-[#A78BFA] rounded-full transition-all hover:shadow-lg hover:shadow-indigo-500/30 transform hover:-translate-y-0.5">Start for free</a>
                                 @endif
                             @endauth
                         @endif
@@ -60,14 +60,14 @@
         <!-- Hero Section -->
         <main class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden items-center flex min-h-screen">
             <!-- Background Elements -->
-            <div class="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-indigo-100 via-transparent to-transparent dark:from-indigo-900/20 dark:via-transparent dark:to-transparent opacity-70"></div>
+            <div class="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-[#C4B5FD]/20 via-transparent to-transparent dark:from-indigo-900/20 dark:via-transparent dark:to-transparent opacity-70"></div>
             <div class="absolute top-1/4 -left-1/4 w-96 h-96 bg-purple-300/30 dark:bg-purple-900/20 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob"></div>
             <div class="absolute top-1/3 -right-1/4 w-96 h-96 bg-indigo-300/30 dark:bg-indigo-900/20 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob animation-delay-2000"></div>
 
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative text-center">
                 <div class="mx-auto max-w-3xl animate-fade-in-up opacity-0">
                     <h1 class="text-5xl lg:text-7xl font-extrabold tracking-tight text-gray-900 dark:text-white leading-[1.1] mb-6">
-                        Protect your ideas with <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-400 dark:to-purple-400">confident speed.</span>
+                        Protect your ideas with <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#C4B5FD] to-[#A78BFA] dark:from-[#C4B5FD] dark:to-[#E6E6FA]">confident speed.</span>
                     </h1>
                     <p class="text-lg lg:text-xl text-gray-600 dark:text-gray-400 mb-10 max-w-2xl mx-auto leading-relaxed">
                         The unified gateway for patent and trademark applications. Automatically track status, securely store documents, and consult with leading IP experts on a premium platform built for modern inventors.
@@ -88,7 +88,7 @@
                         <p class="text-sm font-medium text-gray-500 dark:text-gray-400 mb-4 uppercase tracking-wider">Trusted by top legal firms worldwide</p>
                         <div class="flex gap-8 items-center justify-center opacity-50 grayscale hover:grayscale-0 transition-all duration-500">
                             <!-- Placeholder logos -->
-                            <div class="text-xl font-bold flex items-center gap-1"><div class="w-6 h-6 bg-indigo-600 rounded-sm"></div> Acme Corp</div>
+                            <div class="text-xl font-bold flex items-center gap-1"><div class="w-6 h-6 bg-[#C4B5FD] text-black font-semibold rounded-sm"></div> Acme Corp</div>
                             <div class="text-xl font-serif font-bold italic">Horizon Legal</div>
                             <div class="text-xl font-bold tracking-tighter">GLOBAL<span class="text-blue-500">IP</span></div>
                         </div>
@@ -126,7 +126,7 @@
 
                     <!-- Feature 3 -->
                     <div class="bg-gray-50 dark:bg-[#161615] rounded-3xl p-8 border border-gray-100 dark:border-gray-800 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 animate-fade-in-up delay-300 opacity-0 group">
-                        <div class="w-14 h-14 bg-indigo-100 dark:bg-indigo-900/30 rounded-2xl flex items-center justify-center text-indigo-600 dark:text-indigo-400 mb-6 group-hover:scale-110 transition-transform">
+                        <div class="w-14 h-14 bg-indigo-100 dark:bg-indigo-900/30 rounded-2xl flex items-center justify-center text-[#C4B5FD] dark:text-[#C4B5FD] mb-6 group-hover:scale-110 transition-transform">
                             <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
                         </div>
                         <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-3">Expert Networking</h3>
