@@ -1,153 +1,168 @@
 <x-app-layout>
     <x-slot name="header">
-        <div class="flex justify-between items-center">
-            <div>
-                <span class="text-xl font-bold text-white tracking-tight">Deep Analytics</span>
-                <p class="text-sm text-gray-400 mt-1">Cross-sectional intelligence across the entire IP ecosystem.</p>
-            </div>
-        </div>
+        Analytics & Performance
     </x-slot>
 
-    <!-- Analytics Charts -->
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-        
-        <!-- Geographic Distribution (Bar Chart) -->
-        <div class="bg-[#0A0A0A] rounded-xl border border-white/10 shadow-sm p-6">
-            <h3 class="font-semibold text-white mb-4 flex items-center">
-                <svg class="w-5 h-5 mr-2 text-[#C4B5FD]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                Filing Demographics (Regions)
-            </h3>
-            <div class="relative h-80 w-full">
-                <canvas id="geoChart"></canvas>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-4 mb-8">
+        <!-- Users Card -->
+        <div class="bg-[#0A0A0A] border border-white/10 rounded-xl p-6 flex items-center justify-between">
+            <div>
+                <h4 class="text-sm font-medium text-gray-400 mb-1">Total Users</h4>
+                <div class="text-3xl font-bold text-white">{{ $stats['total_users'] }}</div>
+            </div>
+            <div class="w-12 h-12 bg-[#C4B5FD]/10 rounded-lg flex items-center justify-center text-[#C4B5FD]">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
             </div>
         </div>
 
-        <!-- Radar Chart for Application Complexities -->
-        <div class="bg-[#0A0A0A] rounded-xl border border-white/10 shadow-sm p-6">
-            <h3 class="font-semibold text-white mb-4 flex items-center">
-                <svg class="w-5 h-5 mr-2 text-[#A78BFA]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10l-2 1m0 0l-2-1m2 1v2.5M20 7l-2 1m2-1l-2-1m2 1v2.5M14 4l-2-1-2 1M4 7l2-1M4 7l2 1M4 7v2.5M12 21l-2-1m2 1l2-1m-2 1v-2.5M6 18l-2-1v-2.5M18 18l2-1v-2.5"></path></svg>
-                Sector Distribution
-            </h3>
-            <div class="relative h-80 w-full flex items-center justify-center">
-                <canvas id="radarChart"></canvas>
+        <!-- Clients Card -->
+        <div class="bg-[#0A0A0A] border border-white/10 rounded-xl p-6 flex items-center justify-between">
+            <div>
+                <h4 class="text-sm font-medium text-gray-400 mb-1">Total Clients</h4>
+                <div class="text-3xl font-bold text-white">{{ $stats['clients'] }}</div>
+            </div>
+            <div class="w-12 h-12 bg-blue-400/10 rounded-lg flex items-center justify-center text-blue-400">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
             </div>
         </div>
 
-        <!-- Full Width Line Chart: Revenue / Fees Processed -->
-        <div class="lg:col-span-2 bg-[#0A0A0A] rounded-xl border border-white/10 shadow-sm p-6">
-            <h3 class="font-semibold text-white mb-4 flex items-center">
-                <svg class="w-5 h-5 mr-2 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                Processing Fees Revenue (YTD)
-            </h3>
-            <div class="relative h-72 w-full">
-                <canvas id="revenueChart"></canvas>
+        <!-- Approval Rate (Patents) -->
+        @php
+            $totalPatents = array_sum($stats['patents_by_status'] ?? []);
+            $approvedPatents = $stats['patents_by_status']['approved'] ?? 0;
+            $patentRate = $totalPatents > 0 ? round(($approvedPatents / $totalPatents) * 100) : 0;
+        @endphp
+        <div class="bg-[#0A0A0A] border border-white/10 rounded-xl p-6 flex items-center justify-between">
+            <div>
+                <h4 class="text-sm font-medium text-gray-400 mb-1">Patent Approval Rate</h4>
+                <div class="text-3xl font-bold text-white">{{ $patentRate }}%</div>
+            </div>
+            <div class="w-12 h-12 bg-green-400/10 rounded-lg flex items-center justify-center text-green-400">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
             </div>
         </div>
 
+        <!-- Approval Rate (Trademarks) -->
+        @php
+            $totalTrademarks = array_sum($stats['trademarks_by_status'] ?? []);
+            $approvedTrademarks = $stats['trademarks_by_status']['approved'] ?? 0;
+            $trademarkRate = $totalTrademarks > 0 ? round(($approvedTrademarks / $totalTrademarks) * 100) : 0;
+        @endphp
+        <div class="bg-[#0A0A0A] border border-white/10 rounded-xl p-6 flex items-center justify-between">
+            <div>
+                <h4 class="text-sm font-medium text-gray-400 mb-1">Trademark Approval Rate</h4>
+                <div class="text-3xl font-bold text-white">{{ $trademarkRate }}%</div>
+            </div>
+            <div class="w-12 h-12 bg-[#C4B5FD]/10 rounded-lg flex items-center justify-center text-[#C4B5FD]">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            </div>
+        </div>
     </div>
 
-    <!-- Chart.js Scripts -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <!-- Monthly Filings Chart -->
+        <div class="bg-[#0A0A0A] border border-white/10 rounded-xl p-6">
+            <h3 class="text-lg font-semibold text-white mb-6">Applications Over Time</h3>
+            <div class="relative h-72 w-full">
+                <canvas id="monthlyChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Status Distribution Chart -->
+        <div class="bg-[#0A0A0A] border border-white/10 rounded-xl p-6">
+            <h3 class="text-lg font-semibold text-white mb-6">Status Distribution (Patents)</h3>
+            <div class="relative h-72 w-full flex justify-center">
+                <canvas id="statusChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    @push('scripts')
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            Chart.defaults.color = '#9ca3af';
-            Chart.defaults.font.family = '"Inter", sans-serif';
-            Chart.defaults.borderColor = 'rgba(255,255,255,0.05)';
-
-            // 1. Bar Chart
-            const ctxGeo = document.getElementById('geoChart').getContext('2d');
-            new Chart(ctxGeo, {
-                type: 'bar',
+            // Setup default font color
+            Chart.defaults.color = '#9CA3AF';
+            
+            // Monthly Line Chart
+            const monthlyCtx = document.getElementById('monthlyChart').getContext('2d');
+            new Chart(monthlyCtx, {
+                type: 'line',
                 data: {
-                    labels: ['North America', 'Europe', 'Asia Pacific', 'Latin America', 'MEA'],
-                    datasets: [{
-                        label: 'Filings',
-                        data: [420, 250, 380, 110, 80],
-                        backgroundColor: '#C4B5FD',
-                        borderRadius: 4,
-                        hoverBackgroundColor: '#A78BFA'
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: { legend: { display: false } },
-                    scales: {
-                        x: { grid: { display: false } },
-                        y: { beginAtZero: true }
-                    }
-                }
-            });
-
-            // 2. Radar Chart
-            const ctxRadar = document.getElementById('radarChart').getContext('2d');
-            new Chart(ctxRadar, {
-                type: 'radar',
-                data: {
-                    labels: ['Software Tech', 'Biotech', 'Manufacturing', 'Design', 'Consumer Goods', 'Energy'],
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
                     datasets: [
                         {
                             label: 'Patents',
-                            data: [85, 70, 60, 40, 90, 50],
-                            backgroundColor: 'rgba(196, 181, 253, 0.2)',
+                            data: {!! json_encode(array_values($monthlyPatents)) !!},
                             borderColor: '#C4B5FD',
-                            pointBackgroundColor: '#C4B5FD',
+                            backgroundColor: 'rgba(196, 181, 253, 0.1)',
+                            borderWidth: 2,
+                            tension: 0.4,
+                            fill: true
                         },
                         {
                             label: 'Trademarks',
-                            data: [50, 30, 80, 90, 95, 40],
-                            backgroundColor: 'rgba(16, 185, 129, 0.1)',
-                            borderColor: '#10B981', // emerald
-                            pointBackgroundColor: '#10B981',
+                            data: {!! json_encode(array_values($monthlyTrademarks)) !!},
+                            borderColor: '#60A5FA',
+                            backgroundColor: 'rgba(96, 165, 250, 0.1)',
+                            borderWidth: 2,
+                            tension: 0.4,
+                            fill: true
                         }
                     ]
                 },
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'top', labels: { usePointStyle: true, boxWidth: 8 } }
+                    },
                     scales: {
-                        r: {
-                            angleLines: { color: 'rgba(255,255,255,0.1)' },
-                            grid: { color: 'rgba(255,255,255,0.1)' },
-                            pointLabels: { color: '#e5e7eb' },
-                            ticks: { display: false } // hide numbers internally
+                        y: {
+                            beginAtZero: true,
+                            grid: { color: 'rgba(255,255,255,0.05)' },
+                            ticks: { stepSize: 1 }
+                        },
+                        x: {
+                            grid: { display: false }
                         }
                     }
                 }
             });
 
-            // 3. Line Chart
-            const ctxRev = document.getElementById('revenueChart').getContext('2d');
-            const revGradient = ctxRev.createLinearGradient(0, 0, 0, 400);
-            revGradient.addColorStop(0, 'rgba(16, 185, 129, 0.3)'); // emerald
-            revGradient.addColorStop(1, 'rgba(16, 185, 129, 0)');
-
-            new Chart(ctxRev, {
-                type: 'line',
+            // Status Doughnut Chart
+            const statusCtx = document.getElementById('statusChart').getContext('2d');
+            new Chart(statusCtx, {
+                type: 'doughnut',
                 data: {
-                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+                    labels: ['Pending', 'Under Review', 'Approved', 'Rejected'],
                     datasets: [{
-                        label: 'Revenue ($)',
-                        data: [12000, 19000, 15000, 25000, 22000, 35000, 31000],
-                        borderColor: '#10B981',
-                        backgroundColor: revGradient,
-                        borderWidth: 2,
-                        tension: 0.4,
-                        fill: true,
-                        pointBackgroundColor: '#10B981',
-                        pointBorderColor: '#000000'
+                        data: [
+                            {{ $stats['patents_by_status']['pending'] ?? 0 }},
+                            {{ $stats['patents_by_status']['under_review'] ?? 0 }},
+                            {{ $stats['patents_by_status']['approved'] ?? 0 }},
+                            {{ $stats['patents_by_status']['rejected'] ?? 0 }}
+                        ],
+                        backgroundColor: [
+                            'rgba(250, 204, 21, 0.8)',
+                            'rgba(96, 165, 250, 0.8)',
+                            'rgba(196, 181, 253, 0.8)',
+                            'rgba(239, 68, 68, 0.8)'
+                        ],
+                        borderWidth: 0,
+                        hoverOffset: 4
                     }]
                 },
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
-                    plugins: { legend: { display: false } },
-                    scales: {
-                        x: { grid: { display: false } },
-                        y: { beginAtZero: true }
+                    cutout: '75%',
+                    plugins: {
+                        legend: { position: 'right', labels: { usePointStyle: true, padding: 20 } }
                     }
                 }
             });
         });
     </script>
+    @endpush
 </x-app-layout>

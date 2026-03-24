@@ -1,25 +1,73 @@
 <x-app-layout>
     <x-slot name="header">
-        <div class="flex justify-between items-center">
-            <span>Consultation Appointments</span>
-            <button class="inline-flex items-center justify-center px-4 py-2 text-sm font-medium bg-[#C4B5FD] text-black font-semibold hover:bg-[#A78BFA] rounded-lg transition-colors">
-                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
-                Schedule Meeting
-            </button>
-        </div>
+        Appointments
     </x-slot>
 
-    <div class="bg-[#0A0A0A] rounded-xl border border-white/5 shadow-sm overflow-hidden flex flex-col">
-        <div class="px-6 py-5 border-b border-white/5 flex items-center justify-between">
-            <h3 class="font-semibold text-white">Upcoming Schedule</h3>
+    <div class="bg-[#0A0A0A] border border-white/10 rounded-xl overflow-hidden mt-4">
+        <div class="p-6 border-b border-white/10 flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <h3 class="text-lg font-semibold text-white">Your Consultations</h3>
+            
+            @if(auth()->user()->role === 'client')
+            <a href="{{ route('appointments.create') }}" class="bg-[#C4B5FD] hover:bg-[#A78BFA] text-black px-4 py-2 rounded-lg text-sm font-semibold transition-colors flex items-center gap-2">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+                Book Appointment
+            </a>
+            @endif
+        </div>
+
+        <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+                <thead>
+                    <tr class="border-b border-white/10 bg-[#000000]">
+                        <th class="py-3 px-6 text-xs font-semibold text-gray-400 uppercase tracking-wider">Date & Time</th>
+                        @if(auth()->user()->role !== 'client')
+                        <th class="py-3 px-6 text-xs font-semibold text-gray-400 uppercase tracking-wider">Client</th>
+                        @endif
+                        @if(auth()->user()->role !== 'expert')
+                        <th class="py-3 px-6 text-xs font-semibold text-gray-400 uppercase tracking-wider">Expert</th>
+                        @endif
+                        <th class="py-3 px-6 text-xs font-semibold text-gray-400 uppercase tracking-wider">Status</th>
+                        <th class="py-3 px-6 text-right text-xs font-semibold text-gray-400 uppercase tracking-wider">Action</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-white/5">
+                    @forelse($appointments as $appointment)
+                    <tr class="hover:bg-white/[0.02] transition-colors group">
+                        <td class="py-4 px-6 text-sm text-gray-200 font-medium whitespace-nowrap">
+                            {{ \Carbon\Carbon::parse($appointment->scheduled_at)->format('M d, Y h:i A') }}
+                        </td>
+                        @if(auth()->user()->role !== 'client')
+                        <td class="py-4 px-6 text-sm text-gray-400">{{ $appointment->client->name }}</td>
+                        @endif
+                        @if(auth()->user()->role !== 'expert')
+                        <td class="py-4 px-6 text-sm text-gray-400">{{ $appointment->expert->name }}</td>
+                        @endif
+                        <td class="py-4 px-6">
+                            @if($appointment->status === 'scheduled')
+                                <span class="px-2.5 py-1 bg-blue-400/10 text-blue-400 text-xs font-medium rounded-full border border-blue-400/20">Scheduled</span>
+                            @elseif($appointment->status === 'completed')
+                                <span class="px-2.5 py-1 bg-[#C4B5FD]/10 text-[#C4B5FD] text-xs font-medium rounded-full border border-[#C4B5FD]/20">Completed</span>
+                            @elseif($appointment->status === 'cancelled')
+                                <span class="px-2.5 py-1 bg-red-400/10 text-red-400 text-xs font-medium rounded-full border border-red-400/20">Cancelled</span>
+                            @endif
+                        </td>
+                        <td class="py-4 px-6 text-right">
+                            <a href="{{ route('appointments.show', $appointment->id) }}" class="text-gray-400 hover:text-[#C4B5FD] text-sm font-medium transition-colors">Details</a>
+                        </td>
+                    </tr>
+                    @empty
+                    <tr>
+                        <td colspan="5" class="py-8 text-center text-gray-500 text-sm">No appointments found.</td>
+                    </tr>
+                    @endforelse
+                </tbody>
+            </table>
         </div>
         
-        <div class="flex-1 overflow-x-auto p-12 flex items-center justify-center bg-[#000000]/50">
-            <div class="text-center">
-                <svg class="mx-auto h-12 w-12 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                <h3 class="mt-2 text-sm font-medium text-gray-200">No upcoming appointments</h3>
-                <p class="mt-1 text-sm text-gray-500">Schedule a consultation with an IP Expert.</p>
-            </div>
+        @if($appointments->hasPages())
+        <div class="p-4 border-t border-white/10">
+            {{ $appointments->links() }}
         </div>
+        @endif
     </div>
 </x-app-layout>

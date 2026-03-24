@@ -1,27 +1,74 @@
 <x-app-layout>
     <x-slot name="header">
-        <div class="flex justify-between items-center">
-            <span>Trademark Applications</span>
-            @if(auth()->user()->role === 'client')
-            <button class="inline-flex items-center justify-center px-4 py-2 text-sm font-medium bg-[#C4B5FD] text-black font-semibold hover:bg-[#A78BFA] rounded-lg transition-colors">
-                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
-                New Trademark
-            </button>
-            @endif
-        </div>
+        Trademark Applications
     </x-slot>
 
-    <div class="bg-[#0A0A0A] rounded-xl border border-white/5 shadow-sm overflow-hidden flex flex-col">
-        <div class="px-6 py-5 border-b border-white/5 flex items-center justify-between">
-            <h3 class="font-semibold text-white">All Trademarks</h3>
-        </div>
-        
-        <div class="flex-1 overflow-x-auto p-12 flex items-center justify-center bg-[#000000]/50">
-            <div class="text-center">
-                <svg class="mx-auto h-12 w-12 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
-                <h3 class="mt-2 text-sm font-medium text-gray-200">No trademarks found</h3>
-                <p class="mt-1 text-sm text-gray-500">Protect your brand identity by filing a trademark.</p>
+    <div class="bg-[#0A0A0A] border border-white/10 rounded-xl overflow-hidden mt-4">
+        <!-- Header & Filters -->
+        <div class="p-6 border-b border-white/10 flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <h3 class="text-lg font-semibold text-white">All Applications</h3>
+            
+            <div class="flex items-center gap-3">
+                <form action="{{ route('trademarks.index') }}" method="GET" class="flex items-center gap-2">
+                    <input type="text" name="search" value="{{ request('search') }}" placeholder="Search trademarks..." class="bg-black border border-white/10 rounded-lg text-sm text-gray-200 placeholder-gray-500 focus:border-[#C4B5FD] focus:ring-1 focus:ring-[#C4B5FD] px-3 py-2">
+                    <button type="submit" class="bg-white/5 hover:bg-white/10 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">Search</button>
+                </form>
+
+                @if(auth()->user()->role === 'client')
+                <a href="{{ route('trademarks.create') }}" class="bg-[#C4B5FD] hover:bg-[#A78BFA] text-black px-4 py-2 rounded-lg text-sm font-semibold transition-colors flex items-center gap-2">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+                    New Trademark
+                </a>
+                @endif
             </div>
         </div>
+
+        <!-- Table -->
+        <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+                <thead>
+                    <tr class="border-b border-white/10 bg-[#000000]">
+                        <th class="py-3 px-6 text-xs font-semibold text-gray-400 uppercase tracking-wider">Name</th>
+                        <th class="py-3 px-6 text-xs font-semibold text-gray-400 uppercase tracking-wider">Owner</th>
+                        <th class="py-3 px-6 text-xs font-semibold text-gray-400 uppercase tracking-wider">Category</th>
+                        <th class="py-3 px-6 text-xs font-semibold text-gray-400 uppercase tracking-wider">Status</th>
+                        <th class="py-3 px-6 text-right text-xs font-semibold text-gray-400 uppercase tracking-wider">Action</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-white/5">
+                    @forelse($trademarks as $trademark)
+                    <tr class="hover:bg-white/[0.02] transition-colors group">
+                        <td class="py-4 px-6 text-sm text-gray-200 font-medium">{{ $trademark->name }}</td>
+                        <td class="py-4 px-6 text-sm text-gray-400">{{ $trademark->owner_name }}</td>
+                        <td class="py-4 px-6 text-sm text-gray-400">{{ $trademark->category }}</td>
+                        <td class="py-4 px-6">
+                            @if($trademark->status === 'pending')
+                                <span class="px-2.5 py-1 bg-yellow-400/10 text-yellow-400 text-xs font-medium rounded-full border border-yellow-400/20">Pending</span>
+                            @elseif($trademark->status === 'under_review')
+                                <span class="px-2.5 py-1 bg-blue-400/10 text-blue-400 text-xs font-medium rounded-full border border-blue-400/20">Under Review</span>
+                            @elseif($trademark->status === 'approved')
+                                <span class="px-2.5 py-1 bg-[#C4B5FD]/10 text-[#C4B5FD] text-xs font-medium rounded-full border border-[#C4B5FD]/20">Approved</span>
+                            @elseif($trademark->status === 'rejected')
+                                <span class="px-2.5 py-1 bg-red-400/10 text-red-400 text-xs font-medium rounded-full border border-red-400/20">Rejected</span>
+                            @endif
+                        </td>
+                        <td class="py-4 px-6 text-right">
+                            <a href="{{ route('trademarks.show', $trademark->id) }}" class="text-gray-400 hover:text-[#C4B5FD] text-sm font-medium transition-colors">View Details</a>
+                        </td>
+                    </tr>
+                    @empty
+                    <tr>
+                        <td colspan="5" class="py-8 text-center text-gray-500 text-sm">No trademarks found.</td>
+                    </tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
+        
+        @if($trademarks->hasPages())
+        <div class="p-4 border-t border-white/10">
+            {{ $trademarks->links() }}
+        </div>
+        @endif
     </div>
 </x-app-layout>

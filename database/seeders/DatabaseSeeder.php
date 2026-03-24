@@ -15,10 +15,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $this->call([
-            RolePermissionSeeder::class,
-        ]);
-
         // Admin User
         $adminOptions = [
             'name' => 'Admin User',
@@ -27,8 +23,7 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('password'),
         ];
         $admin = User::where('email', 'admin@example.com')->first();
-        if(!$admin) $admin = User::factory()->create($adminOptions);
-        $admin->assignRole('admin');
+        if(!$admin) User::create($adminOptions);
 
         // Client User
         $clientOptions = [
@@ -38,8 +33,7 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('password'),
         ];
         $client = User::where('email', 'client@example.com')->first();
-        if(!$client) $client = User::factory()->create($clientOptions);
-        $client->assignRole('client');
+        if(!$client) User::create($clientOptions);
 
         // IP Expert User
         $expertOptions = [
@@ -49,7 +43,6 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('password'),
         ];
         $expert = User::where('email', 'expert@example.com')->first();
-        if(!$expert) $expert = User::factory()->create($expertOptions);
-        $expert->assignRole('expert');
+        if(!$expert) User::create($expertOptions);
     }
 }

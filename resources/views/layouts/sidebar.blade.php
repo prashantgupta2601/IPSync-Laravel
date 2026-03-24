@@ -25,14 +25,19 @@
         </a>
         @endif
 
-        <a href="{{ route('patents.index') }}" class="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg {{ request()->routeIs('patents.index') ? 'bg-[#0A0A0A] text-white border border-white/10' : 'text-gray-400 hover:bg-[#0A0A0A] hover:text-gray-200' }} transition-colors">
+        <a href="{{ route('patents.index') }}" class="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg {{ request()->routeIs('patents.*') ? 'bg-[#0A0A0A] text-white border border-white/10' : 'text-gray-400 hover:bg-[#0A0A0A] hover:text-gray-200' }} transition-colors">
             <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
             Patent Applications
         </a>
 
-        <a href="{{ route('trademarks.index') }}" class="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg {{ request()->routeIs('trademarks.index') ? 'bg-[#0A0A0A] text-white border border-white/10' : 'text-gray-400 hover:bg-[#0A0A0A] hover:text-gray-200' }} transition-colors">
+        <a href="{{ route('trademarks.index') }}" class="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg {{ request()->routeIs('trademarks.*') ? 'bg-[#0A0A0A] text-white border border-white/10' : 'text-gray-400 hover:bg-[#0A0A0A] hover:text-gray-200' }} transition-colors">
             <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z"></path></svg>
             Trademark Applications
+        </a>
+
+        <a href="{{ route('ai.similarity') }}" class="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg {{ request()->routeIs('ai.*') ? 'bg-[#0A0A0A] text-[#C4B5FD] border border-white/10 shadow-[0_0_15px_rgba(196,181,253,0.15)]' : 'text-gray-400 hover:bg-[#0A0A0A] hover:text-[#C4B5FD]' }} transition-all group">
+            <svg class="w-5 h-5 flex-shrink-0 text-gray-400 group-hover:text-[#C4B5FD] transition-colors {{ request()->routeIs('ai.*') ? 'text-[#C4B5FD]' : '' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+            AI Similarity Check
         </a>
 
         <a href="{{ route('appointments.index') }}" class="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg {{ request()->routeIs('appointments.index') ? 'bg-[#0A0A0A] text-white border border-white/10' : 'text-gray-400 hover:bg-[#0A0A0A] hover:text-gray-200' }} transition-colors">

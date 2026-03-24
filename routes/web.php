@@ -13,9 +13,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+use App\Http\Controllers\DashboardController;
+
+Route::get('/dashboard', [DashboardController::class, 'index'])
+    ->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -30,6 +31,10 @@ Route::middleware('auth')->group(function () {
     // Dedicated Admin Modules
     Route::get('analytics', [AnalyticsController::class, 'index'])->name('analytics.index');
     Route::get('reports', [ReportController::class, 'index'])->name('reports.index');
+
+    // AI Tools
+    Route::get('ai/similarity', [App\Http\Controllers\AIController::class, 'similarity'])->name('ai.similarity');
+    Route::post('ai/similarity/check', [App\Http\Controllers\AIController::class, 'checkSimilarity'])->name('ai.similarity.check');
 });
 
 require __DIR__.'/auth.php';
