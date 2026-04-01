@@ -1,6 +1,45 @@
+# 🚀 IPSync - Laravel Based Management System
+
+A full-stack **Intellectual Property Facilitation Centre (IPFC) Management System** built using Laravel.  
+This platform helps streamline IP-related processes, manage records, and improve operational efficiency.
+
+---
+
+## 📌 Features
+
+- 🔐 User Authentication (Login / Register)
+- 👨‍💼 Role-Based Access Control (Admin / User)
+- 📂 IP Record Management System
+- 📊 Dashboard with Insights
+- 📝 Form Handling & Data Validation
+- ⚡ Fast & Scalable Backend APIs
+- 🗃️ MySQL Database Integration
+
+---
+
+## 🛠️ Tech Stack
+
+- **Backend:** Laravel (PHP)
+- **Frontend:** Blade / HTML / CSS / JavaScript
+- **Database:** MySQL
+- **Version Control:** Git & GitHub
+
+---
+
+## 📂 Project Structure
+IPSync-Laravel/
+│── app/
+│── routes/
+│── resources/
+│── database/
+│── public/
+│── .env.example
+│── composer.json
+
+
 # IP Management System - How to Run
 
-Since you asked how to run the project, here are the steps to follow once the setup is complete:
+Here are the steps to follow once the setup is complete:
 
 1. **Install PHP and Node dependencies**:
    ```bash
