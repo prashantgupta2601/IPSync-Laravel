@@ -12,6 +12,9 @@ COPY . .
 
 RUN composer install --no-dev --optimize-autoloader
 
+# 👇 IMPORTANT CHANGE
+WORKDIR /app/public
+
 EXPOSE 10000
 
-CMD php artisan serve --host=0.0.0.0 --port=10000
+CMD php -S 0.0.0.0:10000 server.php
