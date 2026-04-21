@@ -1,4 +1,4 @@
-# --- Stage 1: Build Frontend Assets ---
+# --- Stage 1: Build Frontend Assets (Vite) ---
 FROM node:20-alpine AS assets-builder
 WORKDIR /app
 COPY package*.json ./
@@ -6,59 +6,60 @@ RUN npm install
 COPY . .
 RUN npm run build
 
-# --- Stage 2: Production PHP Environment ---
-FROM php:8.2-cli
+# --- Stage 2: Production PHP Runtime ---
+FROM dunglas/frankenphp:1.4-php8.2-alpine
 
-# Set environment variables
-ENV COMPOSER_ALLOW_SUPERUSER=1 \
-    APP_ENV=production \
-    APP_DEBUG=false
+# Enforce production environment
+ENV APP_ENV=production \
+    APP_DEBUG=false \
+    COMPOSER_ALLOW_SUPERUSER=1
 
 # Install system dependencies
-RUN apt-get update && apt-get install -y \
+RUN apk add --no-cache \
+    bash \
     git \
     unzip \
-    curl \
     libzip-dev \
+    postgresql-dev \
     libpq-dev \
-    libicu-dev \
-    libxml2-dev \
-    netcat-openbsd \
-    && rm -rf /var/lib/apt/lists/*
+    icu-dev \
+    oniguruma-dev \
+    libxml2-dev
 
-# Install PHP extensions
+# Install required PHP extensions for Laravel + PostgreSQL
 RUN docker-php-ext-install \
     zip \
     pdo \
     pdo_pgsql \
     intl \
+    mbstring \
     bcmath \
     opcache
 
-# Copy composer from official image
+# Pull official composer binary
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Set working directory
 WORKDIR /app
 
-# Copy application files
+# Copy application source
 COPY . .
-# Copy built assets from Stage 1
+
+# Copy compiled assets from Stage 1
 COPY --from=assets-builder /app/public/build ./public/build
 
-# Install PHP dependencies
+# Install dependencies and optimize autoloader
 RUN composer install --no-dev --optimize-autoloader
 
-# Setup storage and cache permissions
+# Secure permissions for internal directories
 RUN mkdir -p storage/framework/{sessions,views,cache} \
     && chown -R www-data:www-data storage bootstrap/cache \
     && chmod -R 775 storage bootstrap/cache
 
-# Prepare the startup script
+# Prepare startup orchestration
 RUN chmod +x render-start.sh
 
-# Expose the Render port
+# Render standard port exposure
 EXPOSE 10000
 
-# Start command
+# Execute startup script
 CMD ["./render-start.sh"]

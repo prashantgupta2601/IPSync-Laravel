@@ -3,18 +3,24 @@
 # Ensure the port is set
 export PORT=${PORT:-10000}
 
-echo "🚀 Starting application setup..."
+echo "🚀 Starting Production Boot Sequence..."
 
-# 1. Extract DB details from DATABASE_URL if available
+# 1. Enforce Production Safety
+export APP_DEBUG=false
+export APP_ENV=production
+
+# 2. Extract DB details from DATABASE_URL if available for health check
 if [ -n "$DATABASE_URL" ]; then
-    echo "🔍 Extracting database host for connectivity check..."
-    # Simple extraction logic: host is between @ and : (or / if no port)
-    DB_HOST=$(echo "$DATABASE_URL" | sed -e 's/.*@//' -e 's/:.*//' -e 's/\/.*//')
-    DB_PORT=$(echo "$DATABASE_URL" | grep -o ':[0-9]*' | head -1 | sed 's/://')
+    echo "🔍 Analyzing database connection..."
+    # Robust extraction: remove protocol, then get part before path, then get host/port
+    # Example: postgresql://user:pass@host:port/db
+    DB_CLEAN=$(echo "$DATABASE_URL" | sed -e 's/.*@//' -e 's/\/.*//')
+    DB_HOST=$(echo "$DB_CLEAN" | cut -d: -f1)
+    DB_PORT=$(echo "$DB_CLEAN" | cut -d: -f2)
     DB_PORT=${DB_PORT:-5432}
     
     if [ -n "$DB_HOST" ]; then
-        echo "⏳ Waiting for database ($DB_HOST)..."
+        echo "⏳ Waiting for database ($DB_HOST:$DB_PORT)..."
         until nc -z -v -w30 "$DB_HOST" "$DB_PORT"; do
             echo "⏳ Still waiting for database..."
             sleep 2
@@ -23,18 +29,18 @@ if [ -n "$DATABASE_URL" ]; then
     fi
 fi
 
-# 2. Clear all Laravel caches to ensure fresh environment
-echo "🧹 Clearing configuration and application cache..."
-php artisan config:clear
-php artisan cache:clear
-php artisan route:clear
-php artisan view:clear
+# 3. Optimize Laravel for Production
+echo "🧹 Optimizing configuration and routes..."
+php artisan config:cache
+php artisan route:cache
+php artisan view:cache
+php artisan event:cache
 
-# 3. Handle Migrations
+# 4. Handle Migrations
 echo "🏃 Running migrations..."
-php artisan migrate --force --no-interaction || echo "⚠️ Migration failed or skipped. Continuing..."
+php artisan migrate --force --no-interaction || echo "⚠️ Migration issue detected. Continuing startup..."
 
-# 4. Starting the Server
-echo "🌐 Starting Laravel on port $PORT..."
-# Using artisan serve as requested
-exec php artisan serve --host=0.0.0.0 --port=$PORT
+# 5. Start FrankenPHP (Production App Server)
+echo "🌐 Starting FrankenPHP on port $PORT..."
+# exec ensures the server receives termination signals from Render
+exec frankenphp php-server --listen :$PORT

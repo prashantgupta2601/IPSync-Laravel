@@ -1,0 +1,15 @@
+.git
+.env
+.env.*
+node_modules
+vendor
+public/build
+public/storage
+storage/*.key
+.phpunit.result.cache
+.phpunit.cache
+.vscode
+.idea
+Dockerfile
+render-start.sh
+README.md
