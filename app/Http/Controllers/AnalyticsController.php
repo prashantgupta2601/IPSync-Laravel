@@ -7,18 +7,24 @@ use App\Models\Patent;
 use App\Models\Trademark;
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class AnalyticsController extends Controller
 {
     public function index()
     {
-        if (auth()->user()->role !== 'admin') abort(403);
+        if (auth()->user()->role !== 'admin')
+            abort(403);
 
-        // Get monthly applications count for the current year
+        // Initialize arrays
         $monthlyPatents = array_fill(1, 12, 0);
         $monthlyTrademarks = array_fill(1, 12, 0);
 
-        $patentsData = Patent::selectRaw('MONTH(created_at) as month, COUNT(*) as count')
+        // ✅ FIXED: SQLite compatible month extraction
+        $patentsData = Patent::select(
+            DB::raw("CAST(strftime('%m', created_at) AS INTEGER) as month"),
+            DB::raw("COUNT(*) as count")
+        )
             ->whereYear('created_at', Carbon::now()->year)
             ->groupBy('month')
             ->get();
@@ -27,7 +33,11 @@ class AnalyticsController extends Controller
             $monthlyPatents[$data->month] = $data->count;
         }
 
-        $trademarksData = Trademark::selectRaw('MONTH(created_at) as month, COUNT(*) as count')
+        // ✅ FIXED: Same for trademarks
+        $trademarksData = Trademark::select(
+            DB::raw("CAST(strftime('%m', created_at) AS INTEGER) as month"),
+            DB::raw("COUNT(*) as count")
+        )
             ->whereYear('created_at', Carbon::now()->year)
             ->groupBy('month')
             ->get();
@@ -36,7 +46,7 @@ class AnalyticsController extends Controller
             $monthlyTrademarks[$data->month] = $data->count;
         }
 
-        // Summary statistics
+        // Summary stats (unchanged)
         $stats = [
             'total_users' => User::count(),
             'clients' => User::where('role', 'client')->count(),
