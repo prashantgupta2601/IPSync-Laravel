@@ -7,24 +7,26 @@ COPY . .
 RUN npm run build
 
 # --- Stage 2: Production PHP Environment ---
-FROM dunglas/frankenphp:1.4-php8.2-alpine
+FROM php:8.2-cli
 
 # Set environment variables
 ENV COMPOSER_ALLOW_SUPERUSER=1 \
     APP_ENV=production \
     APP_DEBUG=false
 
-# Install system dependencies and PHP extensions
-RUN apk add --no-cache \
-    bash \
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
     git \
     unzip \
+    curl \
     libzip-dev \
-    postgresql-dev \
     libpq-dev \
-    icu-dev \
-    libxml2-dev
+    libicu-dev \
+    libxml2-dev \
+    netcat-openbsd \
+    && rm -rf /var/lib/apt/lists/*
 
+# Install PHP extensions
 RUN docker-php-ext-install \
     zip \
     pdo \

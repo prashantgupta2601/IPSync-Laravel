@@ -18,18 +18,13 @@
             .delay-100 { animation-delay: 100ms; }
             .delay-200 { animation-delay: 200ms; }
             .delay-300 { animation-delay: 300ms; }
-            .glassmorphism {
-                background: rgba(255, 255, 255, 0.7);
-                backdrop-filter: blur(12px);
-                -webkit-backdrop-filter: blur(12px);
-                border: 1px solid rgba(255, 255, 255, 0.5);
-            }
+
         </style>
     </head>
     <body class="font-sans antialiased text-gray-900 bg-[#FAFAFA] dark:bg-[#000000] dark:text-gray-100 selection:bg-[#C4B5FD]/100 selection:text-white">
         
         <!-- Navigation -->
-        <nav class="fixed w-full z-50 glassmorphism dark:bg-[#000000]/80 border-b border-gray-200/50 dark:border-gray-800/50 transition-all">
+        <nav class="fixed w-full z-50 bg-transparent transition-all">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex justify-between items-center h-20">
                     <div class="flex-shrink-0 flex items-center gap-2">
