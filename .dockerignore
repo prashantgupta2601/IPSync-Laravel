@@ -11,5 +11,4 @@ storage/*.key
 .vscode
 .idea
 Dockerfile
-render-start.sh
 README.md
